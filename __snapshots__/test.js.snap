@@ -8,6 +8,18 @@ inspect(1 + 1 * 5, func(14));
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-console.log('1 + 1 * 5: ', 1 + 1 * 5, 'func(14): ', func(14));
+console.log('1 + 1 * 5: ', function () {
+  try {
+    return 1 + 1 * 5;
+  } catch (e) {
+    return '(an error occurred)';
+  }
+}(), 'func(14): ', function () {
+  try {
+    return func(14);
+  } catch (e) {
+    return '(an error occurred)';
+  }
+}());
 "
 `;

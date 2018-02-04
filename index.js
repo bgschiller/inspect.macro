@@ -1,30 +1,39 @@
 const { createMacro, MacroError } = require('babel-plugin-macros');
-const template = require('babel-template');
 const generate = require('@babel/generator').default;
 
-const buildLog = template(`
-  console.log(
-`);
-
-const consoleLogAST = t.memberExpression(
-  t.identifier('console'),
-  t.identifier('log'));
-
-function replaceWithLog(path, t) {
-  const finalArgs = [];
-  path.node.arguments.forEach(arg => {
-    finalArgs.push(
-      t.stringLiteral(`${generate(arg).code}: `),
-      arg);
-  });
-  path.node.arguments = finalArgs;
-  path.node.callee = consoleLogAST;
-}
-
 function inspect({ references, state, babel }) {
+  const t = babel.types;
+
+  const consoleLogAST = t.memberExpression(
+    t.identifier('console'),
+    t.identifier('log'));
+
+  const buildLog = babel.template(`
+  (function () {
+    try {
+      return EXPRESSION
+    } catch (e) {
+      return '(an error occurred)'
+    }
+  }())
+  `);
+
+  function replaceWithLog(path) {
+    const finalArgs = [];
+    path.node.arguments.forEach(arg => {
+      const log = buildLog({ EXPRESSION: arg });
+
+      finalArgs.push(
+        t.stringLiteral(`${generate(arg).code}: `),
+        log.expression);
+    });
+    path.node.arguments = finalArgs;
+    path.node.callee = consoleLogAST;
+  }
+
   references.default.forEach(path => {
     if (path.parentPath.type === 'CallExpression') {
-      replaceWithLog(path.parentPath, babel.types);
+      replaceWithLog(path.parentPath);
     } else {
       console.log('path.type is not a CallExpression', path.parentPath.type);
       throw new MacroError(
