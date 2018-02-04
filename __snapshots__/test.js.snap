@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macros 1. macros: 1. macros 1`] = `
+"
+const inspect = require('./inspect.macro');
+
+inspect(1 + 1 * 5, func(14));
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+console.log('1 + 1 * 5: ', 1 + 1 * 5, 'func(14): ', func(14));
+"
+`;
