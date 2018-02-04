@@ -13,7 +13,7 @@ function inspect({ references, state, babel }) {
     try {
       return EXPRESSION
     } catch (e) {
-      return '(an error occurred)'
+      return '(an error occurred: ' + e + ')'
     }
   }())
   `);
@@ -24,7 +24,7 @@ function inspect({ references, state, babel }) {
       const log = buildLog({ EXPRESSION: arg });
 
       finalArgs.push(
-        t.stringLiteral(`${generate(arg).code}: `),
+        t.stringLiteral(`${generate(arg).code} →`),
         log.expression);
     });
     path.node.arguments = finalArgs;

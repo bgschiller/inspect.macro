@@ -4,13 +4,21 @@
   "description": "Log an expression and the result of that expression to the console",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "babel-plugin-macros"
   ],
   "author": "Brian Schiller",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bgschiller/inspect.macro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bgschiller/inspect.macro"
+  },
+  "homepage": "https://github.com/bgschiller/inspect.macro#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-tester": "^5.0.0",
