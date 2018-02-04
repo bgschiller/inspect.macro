@@ -3,9 +3,12 @@
   "description": "demo for inspect.macro",
   "main": "index.js",
   "scripts": {
-    "test": "babel --plugins babel-plugin-macros index.js"
+    "test": "babel --plugins babel-plugin-macros index.js | node"
   },
   "dependencies": {
-    "babel-plugin-macros": "^2.1.0"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-macros": "^2.1.0",
+    "inspect.macro": "0.0.0"
   }
 }
